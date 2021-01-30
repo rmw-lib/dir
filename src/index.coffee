@@ -11,7 +11,7 @@ export default new Proxy(
   get:(obj, prop)=>
     if obj.has(prop)
       return obj.get(prop)
-    p = CONFIG[prop] or path.join(homedir(),".#{prop}")
+    p = CONFIG[prop] or process.env[prop] or path.join(homedir(),".#{prop}")
     if not fs.existsSync p
       fs.mkdirSync(p, {recursive:true})
     obj.set prop, p
